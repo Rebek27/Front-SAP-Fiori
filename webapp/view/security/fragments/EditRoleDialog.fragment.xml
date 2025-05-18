@@ -36,7 +36,7 @@
       items="{processCatalogModel>/values}"
       selectedKey="{roleDialogModel>/NEW_PROCESSID}"
       placeholder="Selecciona un proceso">
-      <core:Item key="{processCatalogModel>VALUEID}" text="{processCatalogModel>VALUE} -{processCatalogModel>VALUEPAID}" />
+      <core:Item key="{processCatalogModel>VALUEID}" text="{processCatalogModel>VALUE}-{processCatalogModel>VALUEPAID}" />
     </m:ComboBox>
 
     <m:Label text="Privilegios" />

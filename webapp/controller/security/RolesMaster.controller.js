@@ -334,6 +334,7 @@ sap.ui.define(
           oRolesModel.setProperty("/value", aFiltered);
           oRolesModel.setProperty("/filterKey", sKey);
         },
+        
 
         onMultiSearch: function () {
           const sQuery = this.byId("searchRoleName").getValue().toLowerCase();

@@ -40,54 +40,51 @@
         class="sapUiMediumMarginTop">
 
         <tl:Table
-          id="processesTable"
-          rows="{selectedRole>/PROCESSES}"
-          selectionMode="None"
-          alternateRowColors="true"
-          enableColumnReordering="true"
-          width="100%"
-          noData="Este rol no tiene procesos asignados.">
+    id="processesTable"
+    rows="{selectedRole>/PROCESSES}"
+    selectionMode="None"
+    alternateRowColors="true"
+    enableColumnReordering="true"
+    width="100%"
+    noData="Este rol no tiene procesos asignados.">
+    <tl:rowMode>
+        <rowmodes:Fixed rowCount="5" />
+    </tl:rowMode>
+    <tl:columns>
+        <tl:Column>
+            <m:Label text="Proceso" />
+            <tl:template>
+                <m:Text text="{selectedRole>PROCESSID}" />
+            </tl:template>
+        </tl:Column>
 
-          <tl:rowMode>
-            <rowmodes:Fixed rowCount="5" />
-          </tl:rowMode>
+      <tl:Column>
+    <m:Label text="Aplicación" />
+    <tl:template>
+        <m:Text text="{ path: 'selectedRole>PROCESSID', formatter: '.formatProcessApplication' }" />
+    </tl:template>
+</tl:Column>
 
-          <tl:columns>
-            <tl:Column>
-              <m:Label text="Proceso" />
-              <tl:template>
-                <m:Text text="{selectedRole>PROCESSNAME}" />
-              </tl:template>
-            </tl:Column>
-
-            <tl:Column>
-              <m:Label text="Aplicación" />
-              <tl:template>
-                <m:Text text="{selectedRole>APPLICATIONNAME}" />
-              </tl:template>
-            </tl:Column>
-
-            <tl:Column>
-              <m:Label text="Vista" />
-              <tl:template>
-                <m:Text text="{selectedRole>VIEWNAME}" />
-              </tl:template>
-            </tl:Column>
-
-            <tl:Column>
-              <m:Label text="Privilegios" />
-              <tl:template>
+<tl:Column>
+    <m:Label text="Vista" />
+    <tl:template>
+        <m:Text text="{ path: 'selectedRole>PROCESSID', formatter: '.formatProcessView' }" />
+    </tl:template>
+</tl:Column>
+        <tl:Column>
+            <m:Label text="Privilegios" />
+            <tl:template>
                 <m:HBox wrap="Wrap">
-                  <m:FlexBox wrap="Wrap" items="{selectedRole>PRIVILEGES}">
-                    <m:items>
-                      <m:ObjectStatus text="{selectedRole>PRIVILEGENAME}" class="sapUiTinyMarginEnd sapUiTinyMarginTop" />
-                    </m:items>
-                  </m:FlexBox>
+                    <m:FlexBox wrap="Wrap" items="{selectedRole>PRIVILEGES}">
+                        <m:items>
+                            <m:ObjectStatus text="{selectedRole>PRIVILEGEID}" class="sapUiTinyMarginEnd sapUiTinyMarginTop" />
+                        </m:items>
+                    </m:FlexBox>
                 </m:HBox>
-              </tl:template>
-            </tl:Column>
-          </tl:columns>
-        </tl:Table>
+            </tl:template>
+        </tl:Column>
+    </tl:columns>
+</tl:Table>
       </m:Panel>
 
       <!-- 🔹 Usuarios del rol -->
@@ -96,49 +93,44 @@
         class="sapUiMediumMarginTop"
         expandable="false">
 
-        <tl:Table
-          id="usersTable"
-          rows="{selectedRole>/USERS}"
-          selectionMode="None"
-          alternateRowColors="true"
-          enableColumnReordering="true"
-          width="100%"
-          noData="Este rol no tiene usuarios asignados.">
-
-          <tl:rowMode>
-            <rowmodes:Fixed rowCount="5" />
-          </tl:rowMode>
-
-          <tl:columns>
-            <tl:Column>
-              <m:Label text="Usuario" />
-              <tl:template>
-                <m:Text text="{selectedRole>USERID}" />
-              </tl:template>
-            </tl:Column>
-
-            <tl:Column>
-              <m:Label text="Nombre completo" />
-              <tl:template>
+      <tl:Table
+    id="usersTable"
+    rows="{selectedRole>/USERS}"
+    selectionMode="None"
+    alternateRowColors="true"
+    enableColumnReordering="true"
+    width="100%"
+    noData="Este rol no tiene usuarios asignados.">
+    <tl:rowMode>
+        <rowmodes:Fixed rowCount="5" />
+    </tl:rowMode>
+    <tl:columns>
+        <tl:Column>
+            <m:Label text="Usuario" />
+            <tl:template>
                 <m:Text text="{selectedRole>USERNAME}" />
-              </tl:template>
-            </tl:Column>
-
-            <tl:Column>
-              <m:Label text="Empresa" />
-              <tl:template>
+            </tl:template>
+        </tl:Column>
+        <tl:Column>
+            <m:Label text="Nombre completo" />
+            <tl:template>
+                <m:Text text="{selectedRole>USERNAME}" />
+            </tl:template>
+        </tl:Column>
+        <tl:Column>
+            <m:Label text="Empresa" />
+            <tl:template>
                 <m:Text text="{selectedRole>COMPANYNAME}" />
-              </tl:template>
-            </tl:Column>
-
-            <tl:Column>
-              <m:Label text="Departamento" />
-              <tl:template>
+            </tl:template>
+        </tl:Column>
+        <tl:Column>
+            <m:Label text="Departamento" />
+            <tl:template>
                 <m:Text text="{selectedRole>DEPARTMENT}" />
-              </tl:template>
-            </tl:Column>
-          </tl:columns>
-        </tl:Table>
+            </tl:template>
+        </tl:Column>
+    </tl:columns>
+</tl:Table>
       </m:Panel>
 
     </m:content>

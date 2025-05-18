@@ -279,11 +279,16 @@ sap.ui.define(
             if (oRole) {
               const oSelectedRoleModel =
                 this.getView().getModel("selectedRole");
+              console.log("_loadRoleDetails: Datos del rol cargados:", oRole);
               oSelectedRoleModel.setData(oRole);
               Log.debug(
                 "_loadRoleDetails: Datos iniciales del selectedRole",
                 oRole
-              ); // Log aquí
+              );
+              console.log(
+                "Contenido del modelo processCatalogModel:",
+                this.getView().getModel("processCatalogModel").getData()
+              ); // Agrega este log
             } else {
               MessageToast.show("Rol no encontrado.");
             }
@@ -292,6 +297,63 @@ sap.ui.define(
           }
         },
 
+        formatProcessName: function (processId) {
+          const oProcessCatalog = this.getView().getModel(
+            "processCatalogModel"
+          );
+          if (
+            oProcessCatalog &&
+            oProcessCatalog.getData() &&
+            oProcessCatalog.getData().values
+          ) {
+            const oProcess = oProcessCatalog
+              .getData()
+              .values.find((item) => item.VALUEID === processId);
+            return oProcess ? oProcess.DESCRIPTION : "";
+          }
+          return "";
+        },
+
+        formatProcessApplication: function (processId) {
+          const oProcessCatalog = this.getView().getModel(
+            "processCatalogModel"
+          );
+          if (
+            oProcessCatalog &&
+            oProcessCatalog.getData() &&
+            oProcessCatalog.getData().values
+          ) {
+            const oProcess = oProcessCatalog
+              .getData()
+              .values.find((item) => item.VALUEID === processId);
+            if (oProcess && oProcess.VALUE) {
+              const parts = oProcess.VALUE.split("-");
+              // Asume que la aplicación está antes del primer guion
+              return parts.length > 0 ? parts[0] : "";
+            }
+          }
+          return "";
+        },
+
+        formatProcessView: function (processId) {
+          const oProcessCatalog = this.getView().getModel(
+            "processCatalogModel"
+          );
+          if (
+            oProcessCatalog &&
+            oProcessCatalog.getData() &&
+            oProcessCatalog.getData().values
+          ) {
+            const oProcess = oProcessCatalog
+              .getData()
+              .values.find((item) => item.VALUEID === processId);
+            if (oProcess && oProcess.VALUEPAID) {
+              const parts = oProcess.VALUEPAID.split("-"); // Asumimos que la vista está después del primer guion
+              return parts.length > 1 ? parts[1] : "";
+            }
+          }
+          return "";
+        },
         onSaveRoleEdit: async function () {
           const oData = this.getView().getModel("roleDialogModel").getData();
 
@@ -323,19 +385,41 @@ sap.ui.define(
 
             if (!response.ok) throw new Error(await response.text());
 
+            const updatedData = await response.json(); // Obtén la respuesta del backend
+
             MessageToast.show("Rol actualizado correctamente.");
 
-            const oRolesModel = this.getOwnerComponent().getModel("roles");
-            const aRoles = oRolesModel.getProperty("/value");
-            const updatedRole = aRoles.find(
-              (role) => role.ROLEID === oData.ROLEID
-            ); // Busca el rol *actualizado*
+            const oSelectedRoleModel = this.getView().getModel("selectedRole");
+            let updatedRoleDetails;
+            if (updatedData?.role) {
+              updatedRoleDetails = updatedData.role;
+            } else {
+              // Si la respuesta no devuelve el rol actualizado, recarga los detalles
+              await this._loadRoleDetails(oData.ROLEID);
+              updatedRoleDetails = this.getView()
+                .getModel("selectedRole")
+                .getData();
+            } // Actualiza el modelo selectedRole *después* de obtener los datos actualizados
 
-            if (updatedRole) {
-              const oSelectedRoleModel =
-                this.getView().getModel("selectedRole");
-              oSelectedRoleModel.setData(Object.assign({}, updatedRole)); // Establece *todo* el rol actualizado
-              this.byId("processesTable").getBinding("rows").refresh(); // Refresca la tabla
+            oSelectedRoleModel.setData(updatedRoleDetails);
+            console.log(
+              "Modelo 'selectedRole' después de guardar:",
+              oSelectedRoleModel.getData()
+            ); // Intenta forzar la actualización del binding de la tabla
+
+            const oProcessesTable = this.byId("processesTable");
+            if (oProcessesTable) {
+              const oBinding =
+                oProcessesTable.getBinding("rows") ||
+                oProcessesTable.getBinding("items");
+              if (oBinding) {
+                oBinding.refresh();
+                console.log("Binding de la tabla refrescado.");
+              } else {
+                console.log("No se encontró el binding de la tabla.");
+              }
+            } else {
+              console.log("No se encontró la tabla con ID 'processesTable'.");
             }
 
             const oDialog = this.byId("dialogEditRole");
