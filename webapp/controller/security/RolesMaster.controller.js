@@ -196,68 +196,43 @@ sap.ui.define(
             MessageBox.error("Error al guardar el rol: " + err.message);
           }
         },
-
         loadRolesData: async function () {
           try {
             const response = await fetch(
               "http://localhost:4004/api/security/crudRoles?action=get",
-              {
-                method: "POST",
-              }
+              { method: "POST" }
             );
+            if (!response.ok) {
+              const errorText = await response.text();
+              Log.error(
+                `Error fetching roles: ${response.status} - ${errorText}`
+              );
+              MessageBox.error(`Error al cargar los roles: ${errorText}`);
+              return;
+            }
             const data = await response.json();
-
             const aAllRoles = (data.value || []).filter(
               (role) => role.DETAIL_ROW?.DELETED === false
             );
-            const aFiltered = aAllRoles.filter(
-              (role) => role.DETAIL_ROW?.ACTIVED === true
-            );
 
+            // Inicializa el modelo 'roles'
             const oRolesModel = new JSONModel({
-              value: aFiltered,
-              valueAll: aAllRoles,
-              filterKey: "active",
+              value: aAllRoles.filter(
+                // Inicialmente muestra solo los activos
+                (r) => r.DETAIL_ROW?.ACTIVED === true
+              ),
+              valueAll: aAllRoles, // Contiene todos los roles no eliminados
+              filterKey: "active", // Establece el filtro por defecto a 'active'
             });
-
             this.getOwnerComponent().setModel(oRolesModel, "roles");
+            Log.info("Datos de roles cargados.");
           } catch (error) {
-            Log.error("Error al cargar roles", error);
+            Log.error("Error al cargar roles:", error);
+            MessageBox.error(
+              "Error al cargar los roles. Por favor, revise la consola."
+            );
           }
         },
-
-        onStatusFilterChange: function (oEvent) {
-          const sKey = oEvent.getSource().getSelectedKey();
-          const oRolesModel = this.getOwnerComponent().getModel("roles");
-          const aAllRoles = oRolesModel.getProperty("/valueAll") || [];
-
-          let aFiltered = [];
-
-          switch (sKey) {
-            case "active":
-              aFiltered = aAllRoles.filter(
-                (r) =>
-                  r.DETAIL_ROW?.ACTIVED === true &&
-                  r.DETAIL_ROW?.DELETED === false
-              );
-              break;
-            case "inactive":
-              aFiltered = aAllRoles.filter(
-                (r) =>
-                  r.DETAIL_ROW?.ACTIVED === false &&
-                  r.DETAIL_ROW?.DELETED === false
-              );
-              break;
-            default:
-              aFiltered = aAllRoles.filter(
-                (r) => r.DETAIL_ROW?.DELETED === false
-              );
-          }
-
-          oRolesModel.setProperty("/value", aFiltered);
-          oRolesModel.setProperty("/filterKey", sKey);
-        },
-
         onRemovePrivilege: function (oEvent) {
           const oModel = this.getView().getModel("newRoleModel");
           const oData = oModel.getData();
@@ -326,6 +301,38 @@ sap.ui.define(
             .navTo("RouteRolesDetail", {
               roleId: encodeURIComponent(oSelectedRole.ROLEID),
             });
+        },
+
+        onStatusFilterChange: function (oEvent) {
+          const sKey = oEvent.getSource().getSelectedKey();
+          const oRolesModel = this.getOwnerComponent().getModel("roles");
+          const aAllRoles = oRolesModel.getProperty("/valueAll") || [];
+
+          let aFiltered = [];
+
+          switch (sKey) {
+            case "active":
+              aFiltered = aAllRoles.filter(
+                (r) =>
+                  r.DETAIL_ROW?.ACTIVED === true &&
+                  r.DETAIL_ROW?.DELETED === false
+              );
+              break;
+            case "inactive":
+              aFiltered = aAllRoles.filter(
+                (r) =>
+                  r.DETAIL_ROW?.ACTIVED === false &&
+                  r.DETAIL_ROW?.DELETED === false
+              );
+              break;
+            default:
+              aFiltered = aAllRoles.filter(
+                (r) => r.DETAIL_ROW?.DELETED === false
+              );
+          }
+
+          oRolesModel.setProperty("/value", aFiltered);
+          oRolesModel.setProperty("/filterKey", sKey);
         },
 
         onMultiSearch: function () {
