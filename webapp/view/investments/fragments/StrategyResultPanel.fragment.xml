@@ -2,68 +2,84 @@
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Panel id="strategyResultPanelFragment"
-        headerText="{i18n>strategyResultPanelTitle}"
-        expandable="true"
-        expanded="{= !!${strategyResultModel>/hasResults} }"
-        class="sapUiTinyMarginTop">
+    <Panel headerText="Resumen de Simulación" width="auto" class="sapUiResponsiveMargin">
         <content>
-            <HBox renderType="Bare" alignItems="Start" width="100%">
-                <!-- Columna 1: Información -->
-                <VBox width="50%" class="">
-                    <f:SimpleForm id="strategyResultInfoFormInFragment"
-                        editable="false"
-                        layout="ResponsiveGridLayout"
-                        title="{i18n>strategyResultInfoTitle}"
-                        labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12">
-                        <f:content>
-                            <Label text="{i18n>strategyResultPeriodLabel}" />
-                            <Text text="{strategyResultModel>/date_from} - {strategyResultModel>/date_to}" />
+            <!-- Datos Generales -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Configuración" titleStyle="H4"/>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Estrategia:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{strategyResultModel>/simulationName}"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Simbolo:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{strategyResultModel>/symbol}"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Rango:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{
+                        path: 'strategyResultModel>/startDate',
+                        formatter: '.formatDate'
+                    } - {
+                        path: 'strategyResultModel>/endDate',
+                        formatter: '.formatDate'
+                    }"/>
+                </HBox>
+            </VBox>
+            <!-- Estadísticas de Trading -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Estadísticas de Trading" titleStyle="H4"/>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Total Operaciones:" class="sapUiTinyMarginEnd"/>
+                    <ObjectNumber number="{strategyResultModel>/signals/length}" unit="ops"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Compras:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{
+                        parts: ['strategyResultModel>/signals', 'buy'],
+                        formatter: '.formatSignalCount'
+                    }" class="successText"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Ventas:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{
+                        parts: ['strategyResultModel>/signals', 'sell'],
+                        formatter: '.formatSignalCount'
+                    }" class="errorText"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Stop Loss:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{
+                        path: 'strategyResultModel>/signals',
+                        formatter: '.formatStopLossCount'
+                    }" class="warningText"/>
+                </HBox>
+            </VBox>
 
-                            <Label text="{i18n>strategyResultMaParamsLabel}" />
-                            <Text text="{strategyResultModel>/moving_averages/short} / {strategyResultModel>/moving_averages/long}" />
-
-                            <Label text="{i18n>strategyResultOverallSignalLabel}" />
-                            <Text text="{strategyResultModel>/signal}" />
-
-                            <Label text="{i18n>strategyResultNetResultLabel}" design="Bold"/>
-                            <ObjectNumber
-                                number="{
-                                    path: 'strategyResultModel>/result',
-                                    type: 'sap.ui.model.type.Float', 
-                                    formatOptions: { minFractionDigits: 2, maxFractionDigits: 2, groupingEnabled: true }
-                                }"
-                                emphasized="true"
-                                state="{= ${strategyResultModel>/result} > 0 ? 'Success' : (${strategyResultModel>/result} &lt; 0 ? 'Error' : 'None') }" />
-                        </f:content>
-                    </f:SimpleForm>
-                </VBox>
-                <!-- Columna 2: Tabla de señales -->
-                <VBox width="50%">
-                    <Table id="strategySignalsTableInFragment"
-                        headerText="{i18n>strategyResultSignalsTableTitle}"
-                        items="{strategyResultModel>/signals}"
-                        visible="{= !!${strategyResultModel>/signals} &amp;&amp; ${strategyResultModel>/signals}.length > 0}"
-                        class="">
-                        <columns>
-                            <Column width="25%"><Text text="{i18n>signalDateLabel}" /></Column>
-                            <Column width="20%"><Text text="{i18n>signalTypeLabel}" /></Column>
-                            <Column width="25%" hAlign="Right"><Text text="{i18n>signalPriceLabel}" /></Column>
-                            <Column width="30%"><Text text="{i18n>signalConfidenceLabel}" /></Column>
-                        </columns>
-                        <items>
-                            <ColumnListItem>
-                                <cells>
-                                    <Text text="{path: 'strategyResultModel>date', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
-                                    <Text text="{= ${strategyResultModel>type} === 'buy' ? ${i18n>signalTypeBuy} : (${strategyResultModel>type} === 'sell' ? ${i18n>signalTypeSell} : ${strategyResultModel>type}) }" />
-                                    <ObjectNumber number="{parts: [{path: 'strategyResultModel>price'}], formatter: '.formatters.formatDecimalNumber'}" emphasized="false" />
-                                    <Text text="{strategyResultModel>confidence}" />
-                                </cells>
-                            </ColumnListItem>
-                        </items>
-                    </Table>
-                </VBox>
-            </HBox>
+            <!-- Última Señal -->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Última Operación" titleStyle="H4"/>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Tipo:" class="sapUiTinyMarginEnd"/>
+                    <ObjectStatus
+                        text="{strategyResultModel>/signals/0/type}"
+                        state="{
+                            path: 'strategyResultModel>/signals/0/type',
+                            formatter: '.formatSignalState'
+                        }"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Precio:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{
+                        path: 'strategyResultModel>/signals/0/price',
+                        formatter: '.formatSignalPrice'
+                    }"/>
+                </HBox>
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Razón:" class="sapUiTinyMarginEnd"/>
+                    <Text text="{strategyResultModel>/signals/0/reasoning}" wrapping="true"/>
+                </HBox>
+            </VBox>
         </content>
     </Panel>
 </core:FragmentDefinition>

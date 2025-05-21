@@ -17,7 +17,7 @@ sap.ui.define([
     onLoginPress: async function () {
       const oLogin = this.getView().getModel("loginModel").getData();
 
-      try {
+/*       try {
         const response = await fetch("http://localhost:4004/api/sec/usersCRUD?procedure=getall", {
           method: "POST"
         });
@@ -59,7 +59,11 @@ sap.ui.define([
       } catch (error) {
         console.error(" Error al autenticar:", error);
         MessageToast.show("Error al conectar con la API");
-      }
+      } */
+      const oAppModel = this.getOwnerComponent().getModel("appView");
+      oAppModel.setProperty("/isLoggedIn", true);
+      this.getOwnerComponent().getRouter().navTo("RouteMain");
+
     } ,
 
       //Funcion para el ojito
