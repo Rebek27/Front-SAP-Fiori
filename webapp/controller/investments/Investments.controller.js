@@ -53,6 +53,38 @@ sap.ui.define([
     var oStrategyAnalysisModel = new JSONModel(oStrategyAnalysisModelData);
     this.getView().setModel(oStrategyAnalysisModel, "strategyAnalysisModel");
 
+    // Modelo historial de inversiones
+    this.getView().setModel(new JSONModel({strategies: [{
+                date: new Date(2024, 4, 15),  // Mayo 15, 2024
+                strategyName: "Moving Average Crossover 1",
+                symbol: "AAPL",
+                result: 2500.50,
+                status: "Completado"
+            },
+            {
+                date: new Date(2024, 4, 16),  // Mayo 16, 2024
+                strategyName: "Moving Average Crossover 2",
+                symbol: "TSLA",
+                result: -1200.30,
+                status: "Completado"
+            },
+            {
+                date: new Date(2024, 4, 17),  // Mayo 17, 2024
+                strategyName: "Moving Average Crossover 3",
+                symbol: "MSFT",
+                result: 3400.80,
+                status: "En Proceso"
+
+            }],
+            filteredCount: 0,    
+            selectedCount: 0,    
+            filters: {            
+                dateRange: null,
+                investmentRange: [0, 10000],
+                profitRange: [-100, 100]
+            }
+          }), "historyModel");
+
     //Inicialización modelo de resultados
     var oStrategyResultModel = new JSONModel({
         hasResults: false,
@@ -356,6 +388,39 @@ _prepareTableData: function(aData) {
             }
         } else {
             console.warn("No se seleccionaron datos.");
+        }
+    },
+
+        //Historial de inversiones
+    onHistoryPress: function(oEvent) {
+        if (!this._oHistoryPopover) {
+            this._oHistoryPopover = sap.ui.xmlfragment(
+                "com.invertions.sapfiorimodinv.view.investments.fragments.InvestmentHistoryPanel",
+                this
+            );
+            this.getView().addDependent(this._oHistoryPopover);
+        }
+        
+        if (this._oHistoryPopover.isOpen()) {
+            this._oHistoryPopover.close();
+            return;
+        }
+        
+        // Abrir la ventana
+        this._oHistoryPopover.openBy(oEvent.getSource());
+    },
+
+        // ******** FILTRO ********** //
+    onToggleAdvancedFilters: function() {
+        if (!this._oHistoryPopover) return;
+
+        // Get panel directly from popover content
+        const oPanel = sap.ui.getCore().byId("advancedFiltersPanel");
+        
+        if (oPanel) {
+            oPanel.setVisible(!oPanel.getVisible());
+        } else {
+            console.warn("Advanced filters panel not found");
         }
     },
 
