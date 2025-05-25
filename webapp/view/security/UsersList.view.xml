@@ -1,0 +1,131 @@
+<mvc:View
+    controllerName="com.invertions.sapfiorimodinv.controller.security.UsersList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout.form"
+    xmlns:tl="sap.ui.table"
+>
+    <m:Page
+        id="UsersListPage"
+        title="Usuarios Registrados"
+        class="sapUiContentPadding"
+    >
+        <!-- Barra de herramientas con botón para Agregar usuario -->
+        <m:Toolbar id="UsersManageToolBar" design="Transparent" class="customUserToolbar">
+            <m:Button id="CreateUser" text="Crear" press="onAddUser" icon="sap-icon://add" type="Success" class="myBlackButton"/>
+            <m:Button id="UpdateUser" text="Editar" press="onEditUser" icon="sap-icon://edit" type="Emphasized" class="myBlackButton" enabled="{viewModel>/buttonsEnabled}"/>
+            <m:Button id="DeleteUser" text="Eliminar" press="onDeleteUser" icon="sap-icon://delete" type="Negative" enabled="{viewModel>/buttonsEnabled}"/>
+            <m:ToolbarSeparator/>
+            <m:Button id="DesactivateUser" text="Desactivar" icon="sap-icon://decline" press="onDesactivateUser" type="Critical" enabled="{viewModel>/buttonsEnabled}"/>
+            <m:Button id="ActivateUser" text="Activar" icon="sap-icon://accept" press="onActivateUser" type="Success" enabled="{viewModel>/buttonsEnabled}" class="myBlackButton"/>
+            <m:ToolbarSpacer/>
+            <m:SearchField 
+                id="SearchUserField" 
+                width="25rem"
+                placeholder="Buscar usuario..."
+                liveChange="onSearchUser" 
+            />
+            <m:Button id="RefreshUserTable" press="onRefresh" icon="sap-icon://restart" type="Transparent" tooltip="Refrescar tabla"/>
+        </m:Toolbar>
+
+        <tl:Table id="IdTable1UsersManageTable"
+            rows="{/value}"
+            selectionMode="Single"
+            alternateRowColors="true"
+            selectionBehavior="RowOnly"
+            rowSelectionChange="onUserRowSelected"
+            enableSelectAll="false"
+            enableColumnReordering="true"
+            rowActionCount="2"
+            busyIndicatorDelay="0"
+            rowMode="{ui>/rowMode}">
+
+         <tl:columns>
+            <tl:Column id="IdColumnUserId" sortProperty="USERID" width="5rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelUserId" text="USERID" />
+                <tl:template>
+                    <m:Text id="IdTextUserId" text="{USERID}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnUserName" sortProperty="USERNAME" width="10rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelUserName" text="USERNAME" />
+                <tl:template>
+                    <m:Text id="IdTextUserName" text="{USERNAME}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnPhoneNumber" sortProperty="PHONENUMBER" width="10rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelPhoneNumber" text="PHONENUMBER" />
+                <tl:template>
+                    <m:Text id="IdTextPhoneNumber" text="{PHONENUMBER}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnEmail" sortProperty="EMAIL" width="15rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelEmail" text="EMAIL" />
+                <tl:template>
+                    <m:Text id="IdTextEmail" text="{EMAIL}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnBirthdayDate" sortProperty="BIRTHDAYDATE" width="9rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelBirthdayDate" text="BIRTHDAYDATE" />
+                <tl:template>
+                    <m:Text id="IdTextBirthdayDate" text="{BIRTHDAYDATE}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnCompanyName" sortProperty="COMPANYNAME" width="12rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelCompanyName" text="COMPANYNAME" />
+                <tl:template>
+                    <m:Text id="IdTextCompanyName" text="{COMPANYNAME}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnDepartment" sortProperty="DEPARTMENT" width="10rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelDepartment" text="DEPARTMENT" />
+                <tl:template>
+                    <m:Text id="IdTextDepartment" text="{DEPARTMENT}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnRoles" sortProperty="ROLES" width="12rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelRoles" text="ROLES" />
+                <tl:template>
+                    <m:Text id="IdTextRoles" text="{FORMAT_ROLES}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnFunction" sortProperty="FUNCTION" width="10rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelFunction" text="FUNCTION" />
+                <tl:template>
+                    <m:Text id="IdTextFunction" text="{FUNCTION}" wrapping="false"/>
+                </tl:template>
+            </tl:Column>
+
+            <tl:Column id="IdColumnStatus" sortProperty="STATUS" width="12rem" autoResizable="true" resizable="true">
+                <m:Label id="IdLabelStatus" text="STATUS" />
+                <tl:template>
+                    <m:ObjectStatus id="IdTextStatus" text="{= ${DETAIL_ROW/ACTIVED} ? 'Activo' : 'Inactivo' }" state="{= ${DETAIL_ROW/ACTIVED} ? 'Success' : 'Warning' }"/>
+                </tl:template>
+            </tl:Column>
+
+        </tl:columns>
+
+        <tl:footer>
+            <m:OverflowToolbar id="OverFlowUsersManage2">
+                <m:Label id="OberflowLabelUsersManage2" text="Modo de filas" />
+                <m:SegmentedButton selectedKey="{ui>/rowMode}" id="rowModeSelector2">
+                    <m:items>
+                        <m:SegmentedButtonItem id="IdUsersFixedButton2" key="Fixed" icon="sap-icon://locked" />
+                        <m:SegmentedButtonItem id="IdUsersInteracctiveButton2" key="Interactive" icon="sap-icon://resize-vertical" />
+                    </m:items>
+                </m:SegmentedButton>
+            </m:OverflowToolbar>
+        </tl:footer>
+    </tl:Table>
+        
+    </m:Page>
+</mvc:View>

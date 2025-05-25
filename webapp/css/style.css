@@ -1,0 +1,18 @@
+/* Enter your custom styles here */
+.textSuccess {
+  background-color: green !important;
+  font-weight: bold;
+}
+
+.textError {
+  background-color: red !important;
+  font-weight: bold;
+}
+
+.myBlackButton .sapMBtnInner {
+    color: black !important;
+}
+
+.myBlackButton .sapMBtnIcon {
+    color: black !important;
+}

@@ -1,0 +1,62 @@
+<mvc:View
+    controllerName="com.invertions.sapfiorimodinv.controller.SalesForecast"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:tnt="sap.tnt"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+>
+    <tnt:ToolPage
+        id="IdToolPage1SalesForecast"
+        visible="true"
+    >
+        <tnt:header>
+            <f:ShellBar
+                id="IdShellBar1SalesForecast"
+                title="Pronostico de Ventas"
+                homeIcon="./resources/images/logo_sap.png"
+                showMenuButton="true"
+                menuButtonPressed="onMenuButtonPress"
+            >
+                <f:profile>
+                    <m:Avatar
+                        id="IdAvatar1SalesForecast"
+                        initials="UI"
+                        press="onAvatarPress"
+                    />
+                </f:profile>
+            </f:ShellBar>
+        </tnt:header>
+
+        <tnt:sideContent>
+            <core:Fragment
+                fragmentName="com.invertions.sapfiorimodinv.view.salesforecast.componentes.SideNavigation"
+                type="XML"
+            />
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <!--Contenedor de navegación para cada una de las páginas abiertas en este contenedor-->
+            <!--Contenedor de navegación para cada una de las páginas abiertas en este contenedor-->
+            <m:NavContainer
+                id="IdNavContainer1SalesForecast"
+                initialPage="page20"
+            >
+                <m:pages>
+                    <!--(Page20) Pronostico de Ventas (Principal Data Table) -->
+                    <m:ScrollContainer
+                        id="ScrollContainer20SalesForecast"
+                        horizontal="false"
+                        vertical="true"
+                        height="100%"
+                    >
+                        <mvc:XMLView
+                            id="XMLView20SalesForecastTableView"
+                            viewName="com.invertions.sapfiorimodinv.view.salesforecast.pages.SalesForecastMainTable"
+                        />
+                    </m:ScrollContainer>
+                </m:pages>
+            </m:NavContainer>
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

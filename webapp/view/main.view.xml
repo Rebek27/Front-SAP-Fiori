@@ -1,0 +1,86 @@
+<mvc:View
+  controllerName="com.invertions.sapfiorimodinv.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  displayBlock="true"
+    models="{ appView: 'appView' }">
+
+  <VBox class="sapUiSmallMargin">
+
+  <!-- 🧑 Información del Usuario -->
+ <ObjectHeader
+  title="¡Bienvenido al Módulo Administrativo!"
+  intro="Seleccione una opción para comenzar"
+  icon="sap-icon://home"
+  showTitleSelector="false"
+  fullScreenOptimized="true" />
+
+<!-- Información del usuario -->
+<VBox class="sapUiSmallMarginBottom sapUiMediumFontSize" xmlns:core="sap.ui.core">
+  <HBox>
+    <Text text="Usuario:" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+    <Text text="{appView>/currentUser/USERNAME}" class="sapUiTinyMarginBottom" />
+  </HBox>
+  <HBox>
+    <Text text="Fecha de nacimiento:" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+    <Text text="{appView>/currentUser/BIRTHDAYDATE}" class="sapUiTinyMarginBottom" />
+  </HBox>
+  <HBox>
+    <Text text="Empresa:" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+    <Text text="{appView>/currentUser/COMPANYNAME}" class="sapUiTinyMarginBottom" />
+  </HBox>
+  <HBox>
+    <Text text="Departamento:" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+    <Text text="{appView>/currentUser/DEPARTMENT}" class="sapUiTinyMarginBottom" />
+  </HBox>
+</VBox>
+
+
+
+  <Toolbar class="sapUiSmallMarginTop">
+    <Title text="Accesos rápidos" level="H4" />
+    <ToolbarSpacer />
+    <Button icon="sap-icon://refresh" tooltip="Actualizar" press=".onRefresh" />
+  </Toolbar>
+
+
+  <HBox wrap="Wrap" class="sapUiSmallMarginTop">
+
+    <VBox class="sapUiSmallMarginEnd">
+      <GenericTile header="Catálogos" subheader="Administrar catálogos" press=".onGoToCatalogs">
+        <TileContent>
+          <ImageContent src="sap-icon://folder" />
+        </TileContent>
+      </GenericTile>
+    </VBox>
+
+    <VBox class="sapUiSmallMarginEnd">
+      <GenericTile header="Gestión de Roles" subheader="Administrar accesos" press=".onGoToRoles">
+        <TileContent>
+          <ImageContent src="sap-icon://key" />
+        </TileContent>
+      </GenericTile>
+    </VBox>
+
+    <VBox class="sapUiSmallMarginEnd">
+      <GenericTile header="Gestión de Usuarios" subheader="Usuarios y permisos" press=".onGoToUsers">
+        <TileContent>
+          <ImageContent src="sap-icon://employee-approvals" />
+        </TileContent>
+      </GenericTile>
+    </VBox>
+
+    <VBox class="sapUiSmallMarginEnd">
+      <GenericTile header="Módulo Inversiones" subheader="Simular estrategias" press=".onGoToInvertions">
+        <TileContent>
+          <ImageContent src="sap-icon://business-objects-experience" />
+        </TileContent>
+      </GenericTile>
+    </VBox>
+
+  </HBox>
+
+</VBox>
+
+</mvc:View>

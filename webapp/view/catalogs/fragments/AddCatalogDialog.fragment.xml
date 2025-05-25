@@ -1,0 +1,51 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:layout="sap.ui.layout">
+  
+  <Dialog
+    id="addCatalogDialog"
+    title="Agregar Nuevo Catálogo"
+    contentWidth="600px">
+    
+    <content>
+      <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+        <Label text="LABELID" required="true"/>
+        <Input value="{addCatalogModel>/LABELID}"/>
+        
+        <Label text="LABEL" required="true"/>
+        <Input value="{addCatalogModel>/LABEL}"/>
+        
+        <Label text="INDEX"/>
+        <Input value="{addCatalogModel>/INDEX}"/>
+        
+        <Label text="COLLECTION"/>
+        <Input value="{addCatalogModel>/COLLECTION}"/>
+        
+        <Label text="SECTION"/>
+        <Input value="{addCatalogModel>/SECTION}"/>
+        
+        <Label text="SEQUENCE"/>
+        <Input value="{addCatalogModel>/SEQUENCE}" type="Number"/>
+        
+        <Label text="IMAGE URL"/>
+        <Input value="{addCatalogModel>/IMAGE}"/>
+        
+        <Label text="DESCRIPTION"/>
+        <TextArea value="{addCatalogModel>/DESCRIPTION}" rows="3"/>
+        
+        <Label text="Estado Inicial"/>
+        <Switch state="{addCatalogModel>/DETAIL_ROW/ACTIVED}" customTextOn="ACTIVO" customTextOff="INACTIVO"/>
+      </form:SimpleForm>
+    </content>
+    
+    <beginButton>
+      <Button text="Guardar" type="Emphasized" press="onSaveCatalog"/>
+    </beginButton>
+    
+    <endButton>
+      <Button text="Cancelar" press="onCancelAddCatalog"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

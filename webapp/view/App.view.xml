@@ -1,0 +1,98 @@
+<mvc:View
+    controllerName="com.invertions.sapfiorimodinv.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+    models="{ appView: 'appView' }"
+>
+    <tnt:ToolPage
+        id="mainToolPage"
+        class="sapUiSizeCompact"
+    >
+        <!-- Header -->
+        <tnt:header>
+            <f:ShellBar
+                visible="{= ${appView>/isLoggedIn} }"
+                id="shellBar"
+                title="Proyecto Final"
+                showMenuButton="true"
+                homeIcon="./resources/images/logo_sap.png"
+                menuButtonPressed=".onToggleSideNav"
+            >
+                <f:profile>
+                    <Avatar
+                        id="mainAvatar"
+                        initials="{appView>/currentUser/initials}"
+                        visible="{= ${appView>/isLoggedIn} }"
+                        press=".onUserPress"
+                    />
+                </f:profile>
+            </f:ShellBar>
+        </tnt:header>
+
+        <!-- Side Navigation -->
+        <tnt:sideContent>
+            <tnt:SideNavigation
+                id="sideNavigation"
+                itemSelect=".onItemSelect"
+                selectedKey="main"
+                visible="{= ${appView>/isLoggedIn} }"
+            >
+                <tnt:NavigationList id="mainNavigationList">
+                    <!-- Home -->
+                    <tnt:NavigationListItem
+                        id="navItemMain"
+                        key="main"
+                        text="Home"
+                        icon="sap-icon://home"
+                    />
+
+                    <!-- Módulo de Catalogos-->
+                    <tnt:NavigationListItem
+                        id="navItemCatalogs"
+                        key="catalogs"
+                        text="Módulo Catálogos"
+                        icon="sap-icon://folder"
+                    />
+
+                    <!-- Módulo de Seguridad con subitems -->
+                    <tnt:NavigationListItem
+                        id="navItemSecurity"
+                        text="Módulo Seguridad"
+                        icon="sap-icon://shield"
+                        expanded="false"
+                    >
+                        <!-- Gestión de Roles -->
+                        <tnt:NavigationListItem
+                            id="navItemRoles"
+                            key="roles"
+                            text="Gestión de Roles"
+                            icon="sap-icon://key"
+                        />
+                        <!-- Gestión de Roles -->
+                        <tnt:NavigationListItem
+                            id="navItemUsers"
+                            key="users"
+                            text="Gestión de Usuarios"
+                            icon="sap-icon://employee-approvals"
+                        />
+                    </tnt:NavigationListItem>
+
+                    <!-- Módulo de Inversiones -->
+                    <tnt:NavigationListItem
+                        id="navItemInvestments"
+                        key="investments"
+                        text="Módulo de Inversiones"
+                        icon="sap-icon://business-objects-experience"
+                    />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+
+        <!-- Main Content -->
+        <tnt:mainContents>
+            <App id="mainContents" />
+        </tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

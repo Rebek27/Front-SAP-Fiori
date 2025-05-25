@@ -1,0 +1,16 @@
+<SideNavigation
+    id="IdSideNavigation1SalesForecast"
+    xmlns="sap.tnt"
+    expanded="true"
+    selectedKey="{salesForecastNavModel>/selectedKey}"
+    itemSelect="onItemSelect"
+>
+    <NavigationList id="IdNavigationList1SalesForecast" items="{path: 'salesForecastNavModel>/navigation'}">
+        <NavigationListItem
+            id="IdNavigationListItem1SalesForecast"
+            text="{salesForecastNavModel>title}"
+            icon="{salesForecastNavModel>icon}"
+            key="{salesForecastNavModel>key}"
+        />
+    </NavigationList>
+</SideNavigation>

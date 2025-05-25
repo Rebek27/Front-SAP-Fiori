@@ -1,0 +1,74 @@
+<m:Dialog
+            id="dialogAddRole"
+            title="Crear Rol"
+            draggable="true"
+            resizable="true"
+            contentWidth="600px"
+            class="sapUiContentPadding"
+            contentHeight="auto"
+            afterClose=".onDialogClose"
+             xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout.form">
+
+            <layout:SimpleForm
+              editable="true"
+              layout="ResponsiveGridLayout"
+              labelSpanL="4"
+              labelSpanM="4"
+              emptySpanL="1"
+              columnsL="2"
+              columnsM="2">
+
+              <m:Label text="ID del Rol" />
+              <m:Input value="{newRoleModel>/ROLEID}" placeholder="Ej. IdAdmin" />
+
+              <m:Label text="Nombre del Rol" />
+              <m:Input value="{newRoleModel>/ROLENAME}" placeholder="Ej. Administrador" />
+
+              <m:Label text="Descripción" />
+              <m:Input value="{newRoleModel>/DESCRIPTION}" placeholder="Ej. Encargado de seguridad..." />
+
+              <core:Title text="Privilegios por Proceso" />
+
+              <m:Label text="Proceso" />
+              <m:ComboBox
+                items="{processCatalogModel>/values}"
+                selectedKey="{newRoleModel>/NEW_PROCESSID}"
+                placeholder="Selecciona un proceso">
+                <core:Item key="{processCatalogModel>VALUEID}" text="{processCatalogModel>VALUE} -{processCatalogModel>VALUEPAID}" />
+              </m:ComboBox>
+
+              <m:Label text="Privilegios" />
+              <m:MultiComboBox
+                items="{privilegeCatalogModel>/values}"
+                selectedKeys="{newRoleModel>/NEW_PRIVILEGES}"
+                placeholder="Selecciona privilegios">
+                <core:Item key="{privilegeCatalogModel>VALUEID}" text="{privilegeCatalogModel>VALUE}" />
+              </m:MultiComboBox>
+
+              <m:Button text="Agregar Privilegio" icon="sap-icon://add" press=".onAddPrivilege" />
+
+                  <m:Table items="{newRoleModel>/PRIVILEGES}" growing="true" growingThreshold="5">
+                      <m:columns>
+                        <m:Column><m:Text text="Proceso" /></m:Column>
+                        <m:Column><m:Text text="Privilegios" /></m:Column>
+                        <m:Column width="5rem" /> <!-- Columna vacía para el botón -->
+                      </m:columns>
+                      <m:items>
+                        <m:ColumnListItem>
+                          <m:cells>
+                            <m:Text text="{newRoleModel>PROCESSID}" />
+                            <m:Text text="{= ${newRoleModel>PRIVILEGEID}.join(', ')}" />
+                            <m:Button icon="sap-icon://decline" type="Reject" press=".onRemovePrivilege" tooltip="Eliminar" />
+                          </m:cells>
+                        </m:ColumnListItem>
+                      </m:items>
+                    </m:Table>
+            </layout:SimpleForm>
+
+            <m:buttons>
+              <m:Button text="Guardar" type="Emphasized" press=".onSaveRole" />
+              <m:Button text="Cancelar" press=".onDialogClose" />
+            </m:buttons>
+          </m:Dialog>

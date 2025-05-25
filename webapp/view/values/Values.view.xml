@@ -1,0 +1,15 @@
+<mvc:View
+    controllerName="com.invertions.sapfiorimodinv.controller.Values"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+>
+    <m:Page
+        id="IdPageValues"
+        title="Values"
+    >
+        <m:Text
+            id="IdText1Values"
+            text="CONTENIDO DE LA PAGINA PRINCIPAL DE VALORES"
+        />
+    </m:Page>
+</mvc:View>

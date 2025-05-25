@@ -1,0 +1,179 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    controllerName="com.invertions.sapfiorimodinv.controller.catalogs.Catalogs"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:cc="com.invertions.sapfiorimodinv.controller"
+>
+    <Page title="Catálogos">
+        <content>
+            <VBox>
+                <!-- Splitter control para dividir la pantalla en dos -->
+                <cc:CustomSplitter
+                    id="mainSplitter"
+                    orientation="Horizontal"
+                >
+                    <!-- Panel izquierdo: Tabla de catálogos -->
+                    <Panel width="auto">
+                        <layoutData>
+                            <layout:SplitterLayoutData size="100%" />
+                        </layoutData>
+
+                        <!-- 🔹 Barra de herramientas -->
+                        <OverflowToolbar>
+                            <Title
+                                text="Valores"
+                                level="H2"
+                            />
+                            <ToolbarSpacer />
+                            <SearchField
+                                width="20rem"
+                                id="searchField"
+                                placeholder="Buscar en todos los campos..."
+                                liveChange="onFilterChange"
+                                showSearchButton="false"
+                            />
+                            <Button
+                                text="Agregar"
+                                icon="sap-icon://add"
+                                type="Emphasized"
+                                press="onAddCatalog"
+                            />
+                            <Button
+                                id="editButton"
+                                text="Editar"
+                                icon="sap-icon://edit"
+                                press="onEditPressed"
+                                enabled="false"
+                            />
+                            <Button
+                                id="activateButton"
+                                text="Activar"
+                                icon="sap-icon://accept"
+                                press="onActivatePressed"
+                                enabled="false"
+                                visible="{= !${DETAIL_ROW/ACTIVED} }"
+                            />
+                            <Button
+                                id="deactivateButton"
+                                text="Desactivar"
+                                icon="sap-icon://decline"
+                                press="onDeactivatePressed"
+                                enabled="false"
+                                visible="{= ${DETAIL_ROW/ACTIVED} }"
+                            />
+                            <Button
+                                id="deleteButton"
+                                text="Eliminar"
+                                icon="sap-icon://delete"
+                                press="onDeletePressed"
+                                enabled="false"
+                                type="Reject"
+                            />
+                        </OverflowToolbar>
+                        <Table
+                            id="catalogTable"
+                            items="{
+                                path: '/value',
+                                sorter: { path: 'LABELID' }
+                            }"
+                            selectionChange="onSelectionChange"
+                            itemPress="onItemPress"
+                            mode="SingleSelectMaster"
+                            growing="true"
+                            width="auto"
+                        >
+                            <columns>
+                                <Column width="120px">
+                                    <!-- Define un ancho fijo para cada columna -->
+                                    <Text text="LABELID" />
+                                </Column>
+                                <Column width="140px">
+                                    <Text text="LABEL" />
+                                </Column>
+                                <Column width="220px">
+                                    <Text text="INDEX" />
+                                </Column>
+                                <Column width="170px">
+                                    <Text text="COLLECTION" />
+                                </Column>
+                                <Column width="150px">
+                                    <Text text="SECTION" />
+                                </Column>
+                                <Column width="100px">
+                                    <Text text="SEQUENCE" />
+                                </Column>
+                                <Column width="160px">
+                                    <Text text="IMAGE" />
+                                </Column>
+                                <Column width="230px">
+                                    <Text text="DESCRIPTION" />
+                                </Column>
+                                <Column width="120px">
+                                    <Text text="ESTADO" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem type="Active">
+                                    <cells>
+                                        <Text text="{LABELID}" />
+                                        <Text text="{LABEL}" />
+                                        <Text text="{INDEX}" />
+                                        <Text text="{COLLECTION}" />
+                                        <Text text="{SECTION}" />
+                                        <Text text="{SEQUENCE}" />
+                                        <Text text="{IMAGE}" />
+                                        <Text text="{DESCRIPTION}" />
+                                        <Text
+                                            text="{= ${DETAIL_ROW/ACTIVED} ? 'ACTIVO' : 'INACTIVO'}"
+                                            class="{= ${DETAIL_ROW/ACTIVED} ? 'sapUiGreenText' : 'sapUiRedText'}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </Panel>
+                    <!-- Panel derecho: View valores -->
+                    <Panel id="detailPanel">
+                        <layoutData>
+                            <layout:SplitterLayoutData size="0px" />
+                        </layoutData>
+                        <HBox
+                            alignItems="Center"
+                            class="sapUiSmallMargin"
+                        >
+                            <Button
+                                icon="sap-icon://navigation-right-arrow"
+                                type="Default"
+                                tooltip="Volver"
+                                press="onCloseDetailPanel"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Button
+                                icon="sap-icon://resize-horizontal"
+                                type="Default"
+                                tooltip="Centrar panel"
+                                press="onCenterDetailPanel"
+                                class="sapUiTinyMarginEnd"
+                            />
+                            <Button
+                                icon="sap-icon://full-screen"
+                                type="Default"
+                                tooltip="Expandir panel"
+                                press="onExpandDetailPanel"
+                            />
+                        </HBox>
+
+                        <mvc:XMLView
+                            id="XMLViewValues"
+                            viewName="com.invertions.sapfiorimodinv.view.catalogs.Values"
+                        />
+                    </Panel>
+                </cc:CustomSplitter>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

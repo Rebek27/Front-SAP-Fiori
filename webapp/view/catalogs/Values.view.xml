@@ -1,0 +1,106 @@
+<mvc:View
+    controllerName="com.invertions.sapfiorimodinv.controller.catalogs.Values"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout.form"
+    class="sapUiSizeCompact"
+>
+    <!-- 🔹 Barra de herramientas -->
+    <OverflowToolbar>
+        <Title
+            text="Values"
+            level="H2"
+        />
+        <ToolbarSpacer />
+        <SearchField
+            width="20rem"
+            id="ValueSearchField"
+            placeholder="Buscar valores..."
+            liveChange="onFilterChange"
+        />
+        <Button
+                text="Agregar"
+                type="Emphasized"
+                icon="sap-icon://add"
+                press=".onAddValues"
+                enabled="{= !!${values>/selectedValue}}"
+            />
+        <Button
+            text="Editar"
+            icon="sap-icon://edit"
+            press=".onChangeValue"
+            enabled="{= !!${values>/selectedValueIn}}"
+        />
+        <Button
+            text="Activar"
+            icon="sap-icon://accept"
+            press=".StatusValueAccept"
+            enabled="{= !!${values>/selectedValueIn}}"
+        />
+        <Button
+            text="Desactivar"
+            icon="sap-icon://decline"
+            type="Reject"
+            press=".StatusValueDecline"
+            enabled="{= !!${values>/selectedValueIn}}"
+        />
+        <Button
+            text="Eliminar"
+            icon="sap-icon://delete"
+            type="Reject"
+            press=".onDeleteValue"
+            enabled="{= !!${values>/selectedValueIn}}"
+        />
+    </OverflowToolbar>
+
+    <!-- 🔹 Tabla de valores -->
+    <Table
+        id="valuesTable"
+        items="{path: 'values>/values'}"
+        mode="SingleSelectMaster"
+        selectionChange="onItemSelect"
+        width="auto"
+    >
+        <columns>
+            <Column width="190px">
+                <Text text="VALUEID" />
+            </Column>
+            <Column width="170px">
+                <Text text="VALUEPAID" />
+            </Column>
+            <Column width="200px">
+                <Text text="VALUE" />
+            </Column>
+            <Column width="150px">
+                <Text text="ALIAS" />
+            </Column>
+            <Column width="190px">
+                <Text text="IMAGE" />
+            </Column>
+            <Column width="240px">
+                <Text text="DESCRIPTION" />
+            </Column>
+            <Column width="120px">
+                <Text text="ESTADO" />
+            </Column>
+        </columns>
+
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <Text text="{values>VALUEID}" />
+                    <Text text="{values>VALUEPAID}" />
+                    <Text text="{values>VALUE}" />
+                    <Text text="{values>ALIAS}" />
+                    <Text text="{values>IMAGE}" />
+                    <Text text="{values>DESCRIPTION}" />
+                    <Text
+                        text="{= ${values>DETAIL_ROW/ACTIVED} ? 'ACTIVO' : 'INACTIVO'}"
+                        class="{= ${values>DETAIL_ROW/ACTIVED} ? 'sapUiGreenText' : 'sapUiRedText'}"
+                    />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</mvc:View>

@@ -1,0 +1,80 @@
+<mvc:View controllerName="com.invertions.sapfiorimodinv.controller.security.RolesMaster"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:m="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout.form"
+  xmlns:tl="sap.ui.table"
+  xmlns:rowmodes="sap.ui.table.rowmodes"
+  >
+
+  <m:Page id="rolesMaster" title="Roles" class="sapUiContentPadding">
+
+
+    <m:Toolbar design="Transparent" class="customRoleToolbar">
+      <m:Button text="Crear" icon="sap-icon://add" type="Accept" press=".onOpenDialog" />
+
+      <m:SearchField id="searchRoleName" width="25rem" placeholder="Buscar roles..." liveChange=".onMultiSearch" />
+
+      <m:ToolbarSpacer />
+      <m:ToolbarSpacer />
+      <m:Select id="roleStatusFilter" width="12rem" change=".onStatusFilterChange" forceSelection="true">
+        <m:items>
+          <core:Item key="all" text="Todos" />
+          <core:Item key="active" text="Activos" />
+          <core:Item key="inactive" text="Inactivos" />
+        </m:items>
+      </m:Select>
+
+    </m:Toolbar>
+
+
+    <tl:Table id="rolesTable" rows="{roles>/value}" selectionMode="Single" selectionBehavior="RowOnly" rowSelectionChange=".onRoleSelected" enableColumnReordering="true" alternateRowColors="true" rowActionCount="2" width="100%">
+
+      <tl:rowMode>
+        <rowmodes:Fixed rowCount="20" />
+      </tl:rowMode>
+
+      <tl:columns>
+        <tl:Column sortProperty="ROLEID" width="20%">
+          <m:Label text="Role ID" />
+          <tl:template>
+            <m:Text text="{roles>ROLEID}" />
+          </tl:template>
+        </tl:Column>
+        <tl:Column sortProperty="ROLENAME" width="25%">
+          <m:Label text="Nombre del Rol" />
+          <tl:template>
+            <m:Text text="{roles>ROLENAME}" />
+          </tl:template>
+        </tl:Column>
+        <tl:Column sortProperty="DESCRIPTION" width="55%">
+          <m:Label text="Descripción" />
+          <tl:template>
+            <m:Text text="{roles>DESCRIPTION}" />
+          </tl:template>
+        </tl:Column>
+        <tl:Column sortProperty="DETAIL_ROW/ACTIVED" width="15%">
+          <m:Label text="Estado" />
+          <tl:template>
+            <m:ObjectStatus text="{= ${roles>DETAIL_ROW/ACTIVED} ? 'Activo' : 'Inactivo' }" state="{= ${roles>DETAIL_ROW/ACTIVED} ? 'Success' : 'Warning' }" />
+          </tl:template>
+        </tl:Column>
+
+      </tl:columns>
+
+      <tl:footer>
+        <m:OverflowToolbar id="OverFlowUsersManage">
+          <m:Label id="OberflowLabelUsersManage" text="Modo de filas" />
+          <m:SegmentedButton selectedKey="{ui>/rowMode}" id="rowModeSelector">
+            <m:items>
+              <m:SegmentedButtonItem id="IdUsersFixedButton" key="Fixed" icon="sap-icon://locked" />
+              <m:SegmentedButtonItem id="IdUsersInteracctiveButton" key="Interactive" icon="sap-icon://resize-vertical" />
+            </m:items>
+          </m:SegmentedButton>
+        </m:OverflowToolbar>
+      </tl:footer>
+    </tl:Table>
+
+
+  </m:Page>
+</mvc:View>
