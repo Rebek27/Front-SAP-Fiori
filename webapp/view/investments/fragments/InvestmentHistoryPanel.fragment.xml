@@ -70,9 +70,10 @@
             <Table
                 id="historyTable"
                 items="{historyModel>/strategies}"
-                mode="MultiSelect"
+                mode="SingleSelect" 
                 growing="true"
-                growingThreshold="10">
+                growingThreshold="10"
+                selectionChange=".onSelectionChange"> 
                 
                 <headerToolbar>
                     <OverflowToolbar>
