@@ -53,37 +53,68 @@ sap.ui.define([
     var oStrategyAnalysisModel = new JSONModel(oStrategyAnalysisModelData);
     this.getView().setModel(oStrategyAnalysisModel, "strategyAnalysisModel");
 
-    // Modelo historial de inversiones
-    this.getView().setModel(new JSONModel({strategies: [{
-                date: new Date(2024, 4, 15),  // Mayo 15, 2024
-                strategyName: "Moving Average Crossover 1",
-                symbol: "AAPL",
-                result: 2500.50,
-                status: "Completado"
-            },
-            {
-                date: new Date(2024, 4, 16),  // Mayo 16, 2024
-                strategyName: "Moving Average Crossover 2",
-                symbol: "TSLA",
-                result: -1200.30,
-                status: "Completado"
-            },
-            {
-                date: new Date(2024, 4, 17),  // Mayo 17, 2024
-                strategyName: "Moving Average Crossover 3",
-                symbol: "MSFT",
-                result: 3400.80,
-                status: "En Proceso"
-
-            }],
-            filteredCount: 0,    
-            selectedCount: 0,    
-            filters: {            
-                dateRange: null,
-                investmentRange: [0, 10000],
-                profitRange: [-100, 100]
+   this.getView().setModel(new JSONModel({
+    strategies: [
+        {
+            strategyName: "Estrategia MA Crossover",
+            symbol: "AAPL",
+            result: 2500.50,
+            details: {
+                STRATEGY: "Media Móvil 50/200",
+                STARTDATE: "2024-05-01",
+                ENDDATE: "2024-05-15"
             }
-          }), "historyModel");
+        },
+        {
+            strategyName: "Estrategia RSI",
+            symbol: "TSLA",
+            result: -1200.30,
+            details: {
+                STRATEGY: "RSI Sobrevendido",
+                STARTDATE: "2024-05-10",
+                ENDDATE: "2024-05-16"
+            }
+        },
+        {
+            strategyName: "Estrategia Breakout",
+            symbol: "MSFT",
+            result: 3400.80,
+            details: {
+                STRATEGY: "Breakout Nivel 100",
+                STARTDATE: "2024-05-05",
+                ENDDATE: "2024-05-17"
+            }
+        },
+        {
+            strategyName: "Estrategia MACD",
+            symbol: "NVDA",
+            result: 5200.75,
+            details: {
+                STRATEGY: "MACD Divergencia",
+                STARTDATE: "2024-05-12",
+                ENDDATE: "2024-05-18"
+            }
+        },
+        {
+            strategyName: "Estrategia Bollinger",
+            symbol: "AMZN",
+            result: -800.20,
+            details: {
+                STRATEGY: "Bandas Bollinger",
+                STARTDATE: "2024-05-08",
+                ENDDATE: "2024-05-14"
+            }
+        }
+    ],
+    filteredCount: 0,
+    selectedCount: 0,
+    filters: {
+        dateRange: null,
+        investmentRange: [0, 10000],
+        profitRange: [-100, 100]
+    },
+    isDeleteMode: false
+}), "historyModel");
 
     //Inicialización modelo de resultados
     var oStrategyResultModel = new JSONModel({
@@ -331,6 +362,25 @@ _formatDate: function(oDate) {
     return oDate ? DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(oDate) : null;
 },
 
+    formatCurrency: function(value) {
+        if (!value) return "$0.00";
+        return `$${parseFloat(value).toFixed(2)}`;
+    },
+
+        formatDateRange: function(sStartDate, sEndDate) {
+        if (!sStartDate || !sEndDate) return "";
+        
+        const oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+            pattern: "dd/MM/yyyy"
+        });
+        
+        const oStartDate = new Date(sStartDate);
+        const oEndDate = new Date(sEndDate);
+        
+        return oDateFormat.format(oStartDate) + " - " + oDateFormat.format(oEndDate);
+    },
+
+
 // Función auxiliar para preparar datos para la tabla
 _prepareTableData: function(aData) {
     if (!Array.isArray(aData)) return [];
@@ -408,6 +458,10 @@ _prepareTableData: function(aData) {
         
         // Abrir la ventana
         this._oHistoryPopover.openBy(oEvent.getSource());
+
+        this.getView().setModel(new JSONModel({
+                isDeleteMode: false
+            }), "historyModel");
     },
 
         // ******** FILTRO ********** //

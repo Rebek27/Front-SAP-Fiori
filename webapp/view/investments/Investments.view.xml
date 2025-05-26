@@ -34,6 +34,7 @@
                     </IconTabHeader>
                     <ToolbarSpacer/>
                     <Button 
+                        id="btnHistory"
                         icon="sap-icon://history"
                         tooltip="Historial"
                         press=".onHistoryPress"/>
