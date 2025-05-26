@@ -2,84 +2,136 @@
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Panel headerText="Resumen de Simulación" width="auto" class="sapUiResponsiveMargin">
+    <Panel headerText="Resumen de Simulación" width="auto" class="sapUiResponsiveMargin"  expandable="true" expanded="true">
         <content>
             <!-- Datos Generales -->
             <VBox class="sapUiSmallMargin">
-                <Title text="Configuración" titleStyle="H4"/>
+                <Title text="Configuración" titleStyle="H4" />
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Estrategia:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{strategyResultModel>/simulationName}"/>
+                    <Label text="Estrategia:" class="sapUiTinyMarginEnd" />
+                    <Text text="{strategyResultModel>/simulationName}" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Simbolo:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{strategyResultModel>/symbol}"/>
+                    <Label text="Simbolo:" class="sapUiTinyMarginEnd" />
+                    <Text text="{strategyResultModel>/symbol}" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Rango:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{
+                    <Label text="Rango:" class="sapUiTinyMarginEnd" />
+                    <Text
+                        text="{
                         path: 'strategyResultModel>/startDate',
                         formatter: '.formatDate'
                     } - {
                         path: 'strategyResultModel>/endDate',
                         formatter: '.formatDate'
-                    }"/>
+                    }" />
                 </HBox>
             </VBox>
-            <!-- Estadísticas de Trading -->
+            <!-- 
             <VBox class="sapUiSmallMargin">
-                <Title text="Estadísticas de Trading" titleStyle="H4"/>
+                <Title text="Estadísticas de Trading" titleStyle="H4" />
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Total Operaciones:" class="sapUiTinyMarginEnd"/>
-                    <ObjectNumber number="{strategyResultModel>/signals/length}" unit="ops"/>
+                    <Label text="Total Operaciones:" class="sapUiTinyMarginEnd" />
+                    <ObjectNumber number="{strategyResultModel>/signals/length}" unit="ops" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Compras:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{
+                    <Label text="Compras:" class="sapUiTinyMarginEnd" />
+                    <Text
+                        text="{
                         parts: ['strategyResultModel>/signals', 'buy'],
                         formatter: '.formatSignalCount'
-                    }" class="successText"/>
+                    }"
+                        class="successText" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Ventas:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{
+                    <Label text="Ventas:" class="sapUiTinyMarginEnd" />
+                    <Text
+                        text="{
                         parts: ['strategyResultModel>/signals', 'sell'],
                         formatter: '.formatSignalCount'
-                    }" class="errorText"/>
+                    }"
+                        class="errorText" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Stop Loss:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{
+                    <Label text="Stop Loss:" class="sapUiTinyMarginEnd" />
+                    <Text
+                        text="{
                         path: 'strategyResultModel>/signals',
                         formatter: '.formatStopLossCount'
-                    }" class="warningText"/>
+                    }"
+                        class="warningText" />
                 </HBox>
-            </VBox>
+            </VBox> -->
 
-            <!-- Última Señal -->
+            <!-- 
             <VBox class="sapUiSmallMargin">
-                <Title text="Última Operación" titleStyle="H4"/>
+                <Title text="Última Operación" titleStyle="H4" />
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Tipo:" class="sapUiTinyMarginEnd"/>
+                    <Label text="Tipo:" class="sapUiTinyMarginEnd" />
                     <ObjectStatus
                         text="{strategyResultModel>/signals/0/type}"
                         state="{
                             path: 'strategyResultModel>/signals/0/type',
                             formatter: '.formatSignalState'
-                        }"/>
+                        }" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Precio:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{
+                    <Label text="Precio:" class="sapUiTinyMarginEnd" />
+                    <Text
+                        text="{
                         path: 'strategyResultModel>/signals/0/price',
                         formatter: '.formatSignalPrice'
-                    }"/>
+                    }" />
                 </HBox>
                 <HBox justifyContent="SpaceBetween">
-                    <Label text="Razón:" class="sapUiTinyMarginEnd"/>
-                    <Text text="{strategyResultModel>/signals/0/reasoning}" wrapping="true"/>
+                    <Label text="Razón:" class="sapUiTinyMarginEnd" />
+                    <Text text="{strategyResultModel>/signals/0/reasoning}" wrapping="true" />
                 </HBox>
             </VBox>
+Última Señal -->
+
+            <!--Resuen
+            financiero-->
+            <VBox class="sapUiSmallMargin">
+                <Title text="Resumen Financiero" titleStyle="H4" />
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Acciones Compradas:" class="sapUiTinyMarginEnd" />
+                    <Text text="{strategyResultModel>/TOTAL_BOUGHT_UNITS}" />
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Acciones Vendidas:" class="sapUiTinyMarginEnd" />
+                    <Text text="{strategyResultModel>/TOTAL_SOLD_UNITS}" />
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Acciones Restantes:" class="sapUiTinyMarginEnd" />
+                    <Text text="{strategyResultModel>/REMAINING_UNITS}" />
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Efectivo Final:" class="sapUiTinyMarginEnd" />
+                    <ObjectNumber number="{strategyResultModel>/FINAL_CASH}" unit="USD" />
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Valor de Acciones:" class="sapUiTinyMarginEnd" />
+                    <ObjectNumber number="{strategyResultModel>/FINAL_VALUE}" unit="USD" />
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Balance Final:" class="sapUiTinyMarginEnd" />
+                    <ObjectNumber number="{strategyResultModel>/FINAL_BALANCE}" unit="USD" />
+                </HBox>
+
+                <HBox justifyContent="SpaceBetween">
+                    <Label text="Ganancia Real:" class="sapUiTinyMarginEnd" />
+                    <ObjectNumber number="{strategyResultModel>/REAL_PROFIT}" unit="USD"
+                        state="Success" />
+                </HBox>
+            </VBox>
+
         </content>
     </Panel>
 </core:FragmentDefinition>

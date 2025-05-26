@@ -1,65 +1,145 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
-    <Panel id="strategyAnalysisPanelFragment" headerText="{i18n>strategyAnalysisPanelTitle}" expandable="true" expanded="true" width="100%">
+    xmlns:core="sap.ui.core"
+>
+    <Panel
+        id="strategyAnalysisPanelFragment"
+        headerText="{i18n>strategyAnalysisPanelTitle}"
+        expandable="true"
+        expanded="true"
+        width="100%"
+    >
         <content>
-            <f:SimpleForm id="strategyAnalysisFormInFragment" editable="true" layout="ResponsiveGridLayout"
-                labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12"
-                columnsXL="2" columnsL="2" columnsM="1" singleContainerFullSize="false">
+            <f:SimpleForm
+                id="strategyAnalysisFormInFragment"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="12"
+                labelSpanS="12"
+                columnsXL="2"
+                columnsL="2"
+                columnsM="1"
+                singleContainerFullSize="false"
+            >
                 <f:content>
-
-                    <Label text="{i18n>strategyLabelText}" required="true"/>
-                    <ComboBox id="strategyComboBoxInFragment"
-                        items="{strategyAnalysisModel>/strategies}" selectionChange=".onStrategyChange"
+                    <Label
+                        text="{i18n>strategyLabelText}"
+                        required="true"
+                    />
+                    <ComboBox
+                        id="strategyComboBoxInFragment"
+                        items="{strategyAnalysisModel>/strategies}"
+                        selectionChange=".onStrategyChange"
                         placeholder="{i18n>selectStrategyPlaceholder}"
-                        selectedKey="{strategyAnalysisModel>/strategyKey}" width="100%">
-                        <core:Item key="{strategyAnalysisModel>key}" text="{strategyAnalysisModel>text}"/>
+                        selectedKey="{strategyAnalysisModel>/strategyKey}"
+                        width="100%"
+                    >
+                        <core:Item
+                            key="{strategyAnalysisModel>key}"
+                            text="{strategyAnalysisModel>text}"
+                        />
                     </ComboBox>
 
                     <VBox visible="{strategyAnalysisModel>/controlsVisible}">
-
-                        <HBox justifyContent="SpaceBetween" width="100%" renderType="Bare" class="sapUiTinyMarginTop">
+                        <HBox
+                            justifyContent="SpaceBetween"
+                            width="100%"
+                            renderType="Bare"
+                            class="sapUiTinyMarginTop"
+                        >
                             <VBox width="48%">
-                                <Label text="{i18n>longSMALabelText}"/>
-                                <Input id="longSMAInputInFragment" value="{strategyAnalysisModel>/longSMA}" type="Number" placeholder="Ej: 200" width="100%"/>
+                                <Label
+                                    text="{i18n>longSMALabelText}"
+                                    visible="{= ${strategyAnalysisModel>/strategyKey} === 'MACrossover' }"
+                                />
+                                <Input
+                                    id="longSMAInputInFragment"
+                                    value="{strategyAnalysisModel>/longSMA}"
+                                    type="Number"
+                                    placeholder="Ej: 200"
+                                    width="100%"
+                                    visible="{= ${strategyAnalysisModel>/strategyKey} === 'MACrossover' }"
+                                />
                             </VBox>
                             <VBox width="48%">
-                                <Label text="{i18n>shortSMALabelText}"/>
-                                <Input id="shortSMAInputInFragment" value="{strategyAnalysisModel>/shortSMA}" type="Number" placeholder="Ej: 50" width="100%"/>
+                                <Label
+                                    text="{i18n>shortSMALabelText}"
+                                    visible="{= ${strategyAnalysisModel>/strategyKey} === 'MACrossover' }"
+                                />
+                                <Input
+                                    id="shortSMAInputInFragment"
+                                    value="{strategyAnalysisModel>/shortSMA}"
+                                    type="Number"
+                                    placeholder="Ej: 50"
+                                    width="100%"
+                                    visible="{= ${strategyAnalysisModel>/strategyKey} === 'MACrossover' }"
+                                />
                             </VBox>
                         </HBox>
 
                         <VBox width="100%">
-                            
-                                <Label text="{i18n>startDateLabelText}"/>
-                                <DatePicker id="startDatePickerInFragment"
-                                    value="{
+                            <Label text="{i18n>startDateLabelText}" />
+                            <DatePicker
+                                id="startDatePickerInFragment"
+                                value="{
                                         path: 'strategyAnalysisModel>/startDate', type: 'sap.ui.model.type.Date',
                                         formatOptions: { pattern: 'yyyy-MM-dd' }
                                     }"
-                                    displayFormat="long"
-                                    width="100%"/>
+                                displayFormat="long"
+                                width="100%"
+                            />
                         </VBox>
                         <VBox width="100%">
-                                <Label text="{i18n>endDateLabelText}"/>
-                                <DatePicker id="endDatePickerInFragment"
-                                    value="{
+                            <Label text="{i18n>endDateLabelText}" />
+                            <DatePicker
+                                id="endDatePickerInFragment"
+                                value="{
                                         path: 'strategyAnalysisModel>/endDate', type: 'sap.ui.model.type.Date',
                                         formatOptions: { pattern: 'yyyy-MM-dd' }
                                     }"
-                                    displayFormat="long"
-                                    width="100%"/>
-                            </VBox>
+                                displayFormat="long"
+                                width="100%"
+                            />
+                        </VBox>
 
-                        <Label class="sapUiTinyMarginTop" text="Cantidad de acciones"/>
-                        <StepInput value="{strategyAnalysisModel>/stock}" min="1" step="1" displayValuePrecision="0" placeholder="Ej: 10" width="100%" class=""/>
+                        <Label
+                            class="sapUiTinyMarginTop"
+                            text="RSI Simple"
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Reversión Simple' }"
+                        />
+                        <StepInput
+                            value="{strategyAnalysisModel>/rsi}"
+                            min="1"
+                            step="1"
+                            width="100%"
+                            class=""
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Reversión Simple' }"
+                        />
 
-                        <Label/>
-                        <Button id="runAnalysisButtonInFragment" text="{i18n>runAnalysisButtonText}" press=".onRunAnalysisPress" type="Emphasized" width="auto"/>
+                        <Label
+                            class="sapUiTinyMarginTop"
+                            text="Cantidad de dinero a invertir"
+                        />
+                        <StepInput
+                            value="{strategyAnalysisModel>/stock}"
+                            min="1000"
+                            step="500"
+                            width="100%"
+                            class=""
+                        />
 
+                        <Label />
+                        <Button
+                            id="runAnalysisButtonInFragment"
+                            text="{i18n>runAnalysisButtonText}"
+                            press=".onRunAnalysisPress"
+                            type="Emphasized"
+                            width="auto"
+                        />
                     </VBox>
-
                 </f:content>
             </f:SimpleForm>
         </content>

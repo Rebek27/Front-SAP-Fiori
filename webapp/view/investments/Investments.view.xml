@@ -1,169 +1,301 @@
-<mvc:View 
+<mvc:View
     controllerName="com.invertions.sapfiorimodinv.controller.investments.Investments"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:l="sap.ui.layout" 
-    xmlns:f="sap.ui.layout.form" 
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-    displayBlock="true">
-
-    <Page id="investmentsPage" title="{i18n>investmentsPageTitle}" showHeader="true">
+    displayBlock="true"
+>
+    <Page
+        id="investmentsPage"
+        title="{i18n>investmentsPageTitle}"
+        showHeader="true"
+    >
         <headerContent>
-            <core:Fragment fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.SymbolSelector" type="XML"/>
-            <ToolbarSpacer/>
-            <Text text="{= 'Balance: $' + ${strategyAnalysisModel>/balance}}"
-                class="balance sapUiSmallMarginBegin"/>
+            <core:Fragment
+                fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.SymbolSelector"
+                type="XML"
+            />
+            <ToolbarSpacer />
+            <Text
+                text="{= 'Balance: $' + ${strategyAnalysisModel>/balance}}"
+                class="balance sapUiSmallMarginBegin"
+            />
         </headerContent>
 
         <content>
-            <VBox class="sapUiResponsivePadding">            
-                <!-- Navigation Bar -->
+            <VBox class="sapUiResponsivePadding">
                 <OverflowToolbar>
                     <IconTabHeader
                         selectedKey="{viewModel>/selectedTab}"
                         select=".onTabSelect"
                         mode="Inline"
-                        class="sapUiMediumMarginTopBottom sapUiSizeCozy">
+                        class="sapUiMediumMarginTopBottom sapUiSizeCozy"
+                    >
                         <items>
-                            <IconTabFilter text="Table" key="table"/>
-                            <IconTabFilter text="Chart" key="chart"/>
+                            <IconTabFilter
+                                text="Table"
+                                key="table"
+                            />
+                            <IconTabFilter
+                                text="Chart"
+                                key="chart"
+                            />
                         </items>
                     </IconTabHeader>
-                    <ToolbarSpacer/>
-                    <Button 
+                    <ToolbarSpacer />
+                    <Button
                         icon="sap-icon://history"
                         tooltip="Historial"
-                        press=".onHistoryPress"/>
+                        press=".onHistoryPress"
+                    />
                 </OverflowToolbar>
 
-                <!-- Table View -->
-                <VBox visible="{= ${viewModel>/selectedTab} === 'table'}" class="sapUiSmallMarginTop sapUiSmallMarginBegin">
-                    <FlexBox renderType="Bare" alignItems="Stretch" justifyContent="Start" width="100%">
-                        <!-- Data Table -->
-                        <VBox fitContainer="true" width="100%" class="sapUiSmallMarginEnd">
+                <VBox
+                    visible="{= ${viewModel>/selectedTab} === 'table'}"
+                    class="sapUiSmallMarginTop sapUiSmallMarginBegin"
+                >
+                    <FlexBox
+                        renderType="Bare"
+                        alignItems="Stretch"
+                        justifyContent="Start"
+                        width="100%"
+                    >
+                        <VBox
+                            fitContainer="true"
+                            width="100%"
+                            class="sapUiSmallMarginEnd"
+                        >
                             <layoutData>
-                                <FlexItemData growFactor="1"/>
+                                <FlexItemData growFactor="1" />
                             </layoutData>
-                            <ScrollContainer height="550px" vertical="true" horizontal="false" width="100%">
-                                <Table items="{strategyResultModel>/chart_data}" 
-                                       width="100%" 
-                                       growing="true" 
-                                       growingThreshold="100"
-                                       sticky="ColumnHeaders"
-                                       busy="{= !${strategyResultModel>/chart_data} || ${strategyResultModel>/chart_data}.length === 0 }"
-                                       class="customTable"
-                                       >
+                            <ScrollContainer
+                                height="550px"
+                                vertical="true"
+                                horizontal="false"
+                                width="100%"
+                            >
+                                <Table
+                                    items="{strategyResultModel>/chart_data}"
+                                    width="100%"
+                                    growing="true"
+                                    growingThreshold="100"
+                                    sticky="ColumnHeaders"
+                                    busy="{= !${strategyResultModel>/chart_data} || ${strategyResultModel>/chart_data}.length === 0 }"
+                                    class="customTable"
+                                >
                                     <columns>
-                                        <Column><Text text="Date"/></Column>
-                                        <Column><Text text="Open"/></Column>
-                                        <Column><Text text="High"/></Column>
-                                        <Column><Text text="Low"/></Column>
-                                        <Column><Text text="Close"/></Column>
-                                        <Column><Text text="Volume"/></Column>
-                                        <Column><Text text="Indicators"/></Column>
-                                        <Column><Text text="Signals"/></Column>
-                                        <Column><Text text="Rules"/></Column>
-                                        <Column><Text text="Shares"/></Column>
+                                        <Column>
+                                            <Text text="Date" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Open" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="High" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Low" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Close" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Volume" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Indicators" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Signals" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Rules" />
+                                        </Column>
+                                        <Column>
+                                            <Text text="Shares" />
+                                        </Column>
                                     </columns>
                                     <items>
-                                        <ColumnListItem type="Active"
-                                            highlight="{= ${strategyResultModel>SIGNALS} === 'BUY' ? 'Success' : (${strategyResultModel>SIGNALS} === 'SELL' ? 'Error' : 'None') }">
+                                        <ColumnListItem
+                                            type="Active"
+                                            highlight="{= ${strategyResultModel>SIGNALS} === 'ACCIÓN BUY' ? 'Success' : (${strategyResultModel>SIGNALS} === 'ACCIÓN SELL' ? 'Error' : 'None') }"
+                                        >
                                             <cells>
-                                                <Text text="{strategyResultModel>DATE}"/>
-                                                <Text text="{strategyResultModel>OPEN}"/>
-                                                <Text text="{strategyResultModel>HIGH}"/>
-                                                <Text text="{strategyResultModel>LOW}"/>
-                                                <Text text="{strategyResultModel>CLOSE}"/>
-                                                <Text text="{strategyResultModel>VOLUME}"/>
-                                                <Text text="{strategyResultModel>INDICATORS}"/>
-                                                <Text text="{strategyResultModel>SIGNALS}"/>
-                                                <Text text="{strategyResultModel>RULES}"/>
-                                                <Text text="{strategyResultModel>SHARES}"/>
+                                                <Text
+                                                    text="{strategyResultModel>DATE}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>OPEN}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>HIGH}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>LOW}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>CLOSE}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>VOLUME}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>INDICATORS_TEXT}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>SIGNALS}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>RULES}"
+                                                />
+                                                <Text
+                                                    text="{strategyResultModel>SHARES}"
+                                                />
                                             </cells>
                                         </ColumnListItem>
                                     </items>
                                 </Table>
                             </ScrollContainer>
                         </VBox>
-                        <!-- Strategy Analysis Panel -->
-                        <VBox width="300px" class="sapUiSmallMarginBottom">
-                            <core:Fragment id="strategyAnalysisPanelTable" 
-                                         fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.StrategyAnalysisPanel" 
-                                         type="XML"/>
+                        <VBox
+                            width="300px"
+                            class="sapUiSmallMarginBottom"
+                        >
+                            <core:Fragment
+                                id="strategyAnalysisPanelTable"
+                                fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.StrategyAnalysisPanel"
+                                type="XML"
+                            />
                         </VBox>
                     </FlexBox>
                 </VBox>
 
-                <!-- Chart View -->
-                <VBox visible="{= ${viewModel>/selectedTab} === 'chart'}" class="sapUiSmallMarginTop sapUiSmallMarginBegin">
-                    <FlexBox renderType="Bare" alignItems="Stretch" justifyContent="Start" height="auto" width="100%">
-                        <!-- Chart Panel -->
-                        <VBox fitContainer="true" height="100%" width="100%" class="sapUiSmallMarginEnd">
+                <VBox
+                    visible="{= ${viewModel>/selectedTab} === 'chart'}"
+                    class="sapUiSmallMarginTop sapUiSmallMarginBegin"
+                >
+                    <FlexBox
+                        renderType="Bare"
+                        alignItems="Stretch"
+                        justifyContent="Start"
+                        height="auto"
+                        width="100%"
+                    >
+                        <VBox
+                            fitContainer="true"
+                            height="100%"
+                            width="100%"
+                            class="sapUiSmallMarginEnd"
+                        >
                             <layoutData>
-                                <FlexItemData growFactor="1"/>
+                                <FlexItemData growFactor="1" />
                             </layoutData>
-                            <Panel headerText="Gráfico de Precios" width="100%" class="sapUiSizeCompact">
+                            <Panel
+                                headerText="Gráfico de Precios"
+                                width="100%"
+                                class="sapUiSizeCompact"
+                            >
                                 <headerToolbar>
                                     <OverflowToolbar>
-                                        <Title text="Gráfico de Precios"/>
-                                        <ToolbarSpacer/>
-                                        <Button icon="sap-icon://refresh" 
-                                                tooltip="Actualizar datos" 
-                                                press=".onRefreshChart"/>
+                                        <Title text="Gráfico de Precios" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            icon="sap-icon://refresh"
+                                            tooltip="Actualizar datos"
+                                            press=".onRefreshChart"
+                                        />
                                     </OverflowToolbar>
                                 </headerToolbar>
                                 <content>
-                                    <viz:VizFrame id="idVizFrame"
-                                                 vizType="timeseries_line" 
-                                                 width="auto"
-                                                 uiConfig="{applicationSet:'fiori'}"
-                                                 busy="{= !${strategyResultModel>/chart_data} || ${strategyResultModel>/chart_data}.length === 0 }"
-                                                 selectData=".onDataPointSelect">
+                                    <viz:VizFrame
+                                        id="idVizFrame"
+                                        vizType="timeseries_line"
+                                        width="auto"
+                                        uiConfig="{applicationSet:'fiori'}"
+                                        busy="{= !${strategyResultModel>/chart_data} || ${strategyResultModel>/chart_data}.length === 0 }"
+                                        selectData=".onDataPointSelect"
+                                    >
                                         <viz:dataset>
-                                            <viz.data:FlattenedDataset data="{strategyResultModel>/chart_data}">
+                                            <viz.data:FlattenedDataset
+                                                data="{strategyResultModel>/chart_data}"
+                                            >
                                                 <viz.data:dimensions>
-                                                    <viz.data:DimensionDefinition name="Fecha"
-                                                                                value="{strategyResultModel>DATE_GRAPH}"
-                                                                                dataType="date"/>
+                                                    <viz.data:DimensionDefinition
+                                                        name="Fecha"
+                                                        value="{DATE_GRAPH}"
+                                                        dataType="date"
+                                                    />
                                                 </viz.data:dimensions>
                                                 <viz.data:measures>
-                                                    <viz.data:MeasureDefinition name="PrecioCierre" 
-                                                                              value="{strategyResultModel>CLOSE}"/>
-                                                    <viz.data:MeasureDefinition name="ShortMA" 
-                                                                              value="{strategyResultModel>SHORT_MA}"/>
-                                                    <viz.data:MeasureDefinition name="LongMA" 
-                                                                              value="{strategyResultModel>LONG_MA}"/>
-                                                    <viz.data:MeasureDefinition name="Señal BUY" 
-                                                                              value="{strategyResultModel>BUY_SIGNAL}"/>
-                                                    <viz.data:MeasureDefinition name="Señal SELL" 
-                                                                              value="{strategyResultModel>SELL_SIGNAL}"/>
+                                                    <viz.data:MeasureDefinition
+                                                        name="PrecioCierre"
+                                                        value="{CLOSE}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="SHORT_MA"
+                                                        value="{SHORT_MA}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="LONG_MA"
+                                                        value="{LONG_MA}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="RSI"
+                                                        value="{RSI}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="SMA"
+                                                        value="{SMA}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="Señal BUY"
+                                                        value="{BUY_SIGNAL}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="Señal SELL"
+                                                        value="{SELL_SIGNAL}"
+                                                    />
                                                 </viz.data:measures>
                                             </viz.data:FlattenedDataset>
                                         </viz:dataset>
                                         <viz:feeds>
-                                            <viz.feeds:FeedItem uid="timeAxis" type="Dimension" values="Fecha"/>
-                                            <viz.feeds:FeedItem uid="valueAxis" type="Measure" 
-                                                               values="PrecioCierre,ShortMA,LongMA,Señal BUY,Señal SELL"/>
+                                            <viz.feeds:FeedItem
+                                                uid="timeAxis"
+                                                type="Dimension"
+                                                values="Fecha"
+                                            />
+                                            <viz.feeds:FeedItem
+                                                uid="valueAxis"
+                                                type="Measure"
+                                                values="{strategyAnalysisModel>/chartMeasuresFeed}"
+                                            />
                                         </viz:feeds>
                                     </viz:VizFrame>
                                 </content>
                             </Panel>
                         </VBox>
-                        <!-- Strategy Analysis Panel -->
-                        <VBox width="300px" class="sapUiSmallMarginBottom">
-                            <core:Fragment id="strategyAnalysisPanelChart" 
-                                         fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.StrategyAnalysisPanel" 
-                                         type="XML"/>
+                        <VBox
+                            width="300px"
+                            class="sapUiSmallMarginBottom"
+                        >
+                            <core:Fragment
+                                id="strategyAnalysisPanelChart"
+                                fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.StrategyAnalysisPanel"
+                                type="XML"
+                            />
                         </VBox>
                     </FlexBox>
-                <!-- Strategy Results -->
-                <VBox width="auto">
-                    <core:Fragment fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.StrategyResultPanel" 
-                                 type="XML"/>
-                </VBox>
+                    <VBox width="auto">
+                        <core:Fragment
+                            fragmentName="com.invertions.sapfiorimodinv.view.investments.fragments.StrategyResultPanel"
+                            type="XML"
+                        />
+                    </VBox>
                 </VBox>
             </VBox>
         </content>

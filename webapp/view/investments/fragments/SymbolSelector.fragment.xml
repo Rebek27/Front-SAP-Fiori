@@ -1,13 +1,18 @@
 <core:FragmentDefinition
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns:core="sap.ui.core"
-  xmlns="sap.m">
-  <ComboBox
-    id="symbolSelector"
-    width="300px"
-    placeholder="Selecciona un símbolo (TSLA, AAPL...)"
-    change=".onSymbolChange"
-    items="{symbolModel>/symbols}">
-    <core:Item key="{symbolModel>symbol}" text="{symbolModel>name} ({symbolModel>symbol})"/>
-  </ComboBox>
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <ComboBox
+        id="symbolSelector"
+        width="300px"
+        placeholder="Selecciona un símbolo (TSLA, AAPL...)"
+        change=".onSymbolChange"
+        items="{symbolModel>/symbols}"
+    >
+        <core:Item
+            key="{symbolModel>symbol}"
+            text="{symbolModel>name} ({symbolModel>symbol})"
+        />
+    </ComboBox>
 </core:FragmentDefinition>
