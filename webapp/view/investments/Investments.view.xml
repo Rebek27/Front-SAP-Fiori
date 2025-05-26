@@ -253,6 +253,14 @@
                                                         value="{SMA}"
                                                     />
                                                     <viz.data:MeasureDefinition
+                                                        name="MA"
+                                                        value="{MA}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
+                                                        name="ATR"
+                                                        value="{ATR}"
+                                                    />
+                                                    <viz.data:MeasureDefinition
                                                         name="Señal BUY"
                                                         value="{BUY_SIGNAL}"
                                                     />

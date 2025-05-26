@@ -121,6 +121,73 @@
 
                         <Label
                             class="sapUiTinyMarginTop"
+                            text="MA Length"
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+                        <StepInput
+                            value="{strategyAnalysisModel>/ma_length}"
+                            min="1"
+                            step="1"
+                            width="100%"
+                            class=""
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+
+                        <Label
+                            class="sapUiTinyMarginTop"
+                            text="ATR"
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+                        <StepInput
+                            value="{strategyAnalysisModel>/atr}"
+                            min="1"
+                            step="1"
+                            width="100%"
+                            class=""
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+
+                        <Label
+                            class="sapUiTinyMarginTop"
+                            text="Multiplier"
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+                        <StepInput
+                            value="{ 
+                                path: 'strategyAnalysisModel>/mult', 
+                                type: 'sap.ui.model.type.Float', 
+                                formatOptions: { minFractionDigits: 1, maxFractionDigits: 2 } 
+                            }"
+                            min="1"
+                            step="0.1"
+                            displayValuePrecision="2"
+                            width="100%"
+
+                            class=""
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+                        
+                        <Label
+                            class="sapUiTinyMarginTop"
+                            text="Risk/Reward"
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+                        <StepInput
+                            min="1"
+                            step="0.1"
+                            width="100%"
+                            value="{ 
+                                path: 'strategyAnalysisModel>/rr', 
+                                type: 'sap.ui.model.type.Float', 
+                                formatOptions: { minFractionDigits: 1, maxFractionDigits: 2 } 
+                            }"
+                            displayValuePrecision="2"
+                            class=""
+                            visible="{= ${strategyAnalysisModel>/strategyKey} === 'Supertrend' }"
+                        />
+
+                        <Label
+                            class="sapUiTinyMarginTop"
                             text="Cantidad de dinero a invertir"
                         />
                         <StepInput
